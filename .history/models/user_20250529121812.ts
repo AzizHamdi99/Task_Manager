@@ -1,0 +1,12 @@
+import mongoose, { Schema } from "mongoose";
+
+
+const userShcema = new Schema({
+    fullname: {
+        type: String, required: true
+    },
+    email: {
+        type: String, required: true, unique: true
+    },
+
+})

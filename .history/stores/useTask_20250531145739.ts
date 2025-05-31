@@ -1,0 +1,83 @@
+import { create } from "zustand";
+import axios from "axios";
+interface todo {
+    text: string;
+    completed: boolean
+}
+interface Task {
+    id: string;
+    title: string;
+    description: string;
+    priority: string;
+    status: string;
+    dueDate: Date;
+    assignedTo: string[];
+    createdBy: string[];
+    attachments: string[];
+    todoCheckList: todo;
+    progress: number
+
+
+}
+
+interface TaskStore {
+    tasks: Task[] | null
+    loading: boolean,
+    addTask: (data: Omit<Task, "progress"> & { progress?: number }) => Promise<void>;
+    deleteTask: (taskId: string) => Promise<void>;
+    getTasks: (data: { userId: string }) => Promise<void>;
+
+}
+
+export const useTaskStore = create<TaskStore>((set) => ({
+    tasks: null,
+    loading: true,
+
+    addTask: async (data) => {
+        try {
+            set({ loading: true })
+            await axios.post('/api/addTask', data)
+            set({ loading: false })
+        } catch (error) {
+            console.error("Error adding task:", error);
+            set({ loading: false });
+
+        }
+
+    },
+    deleteTask: async (taskId) => {
+
+        try {
+            set({ loading: true })
+            await axios.post(`/api/deletetask/${taskId}`)
+            set((state) => ({
+                tasks: state.tasks?.filter((task) => task.id !== taskId) || [],
+                loading: false,
+            }));
+
+        } catch (error) {
+            console.error("Error deleting task:", error);
+            set({ loading: false });
+
+        }
+
+    },
+    getTasks: async (userId) => {
+        set({ loading: false })
+        try {
+            const res = await axios.post(`/api/tasks/${userId}`)
+            set({ tasks: res.data })
+        } catch (error) {
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+}));

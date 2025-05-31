@@ -1,0 +1,37 @@
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+
+interface PriorityCounts {
+    low: number;
+    meduim: number;
+    high: number;
+}
+
+function StatusBarChart({ PriorityData }: { PriorityData: PriorityCounts }) {
+    const chartData = [
+        { name: "Low", value: PriorityData.low, fill: "#00B386" },
+        { name: "Medium", value: PriorityData.meduim, fill: "#F4A300" },
+        { name: "High", value: PriorityData.high, fill: "#F23D5C" },
+    ];
+
+    console.log(PriorityData)
+    return (
+        <div>
+            <h2 className="text-lg font-semibold mb-4">Task Priority Levels</h2>
+            <ResponsiveContainer width="100%" height={350}>
+                <BarChart
+                    data={chartData}
+                    barCategoryGap={10} // No space between categories
+                    barGap={10}          // Small gap between bars if there are multiple in one category
+                >
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip formatter={(value: number, name: string) => [`${value}`, name]} />
+                    <Bar dataKey="value" barSize={200} />
+                </BarChart>
+            </ResponsiveContainer>
+        </div>
+    );
+}
+
+export default StatusBarChart;
