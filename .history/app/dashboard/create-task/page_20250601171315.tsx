@@ -37,7 +37,7 @@ function page() {
 
     const [date, setDate] = useState()
 
-    const { users, getUsers, addTask } = useTaskStore()
+    const { users, getUsers } = useTaskStore()
     const { user, fetchUser } = useAuthStore()
 
 
@@ -69,40 +69,30 @@ function page() {
 
     const handleSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault()
-        try {
-            const finalData = {
-                ...data,
-                dueDate: date,
-                todoCheckList,
-                attachments,
-                assignedTo: assignedUserIds,
-            }
-            await addTask(finalData)
 
-
-
-            setData({
-                title: "",
-                description: "",
-                priority: "",
-                dueDate: "",
-                assignedTo: [] as string[],
-                createdBy: "",
-                todoCheckList: [] as string[],
-                attachments: [] as string[],
-            })
-            setAttachments([])
-
-            setAssignedUserIds([])
-            setTodoCheckList([])
-            setDate(undefined)
-
-        } catch (error) {
-            console.log(error)
-
+        const finalData = {
+            ...data,
+            dueDate: date,
+            todoCheckList,
+            attachments,
+            assignedTo: assignedUserIds,
         }
 
+        console.log("Submitted Task:", finalData)
+        setData({
+            title: "",
+            description: "",
+            priority: "",
+            dueDate: "",
+            assignedTo: [] as string[],
+            createdBy: "",
+            todoCheckList: [] as string[],
+            attachments: [] as string[],
+        })
+        setAttachments([])
 
+        setAssignedUserIds([])
+        setTodoCheckList([])
     }
     useEffect(() => {
         if (!user) {
@@ -193,68 +183,37 @@ function page() {
                         </PopoverContent>
                     </Popover>
                 </div>
-                <div className='flex flex-col gap-1.5'>
+                <div className='flex flex-col gap-1.5' >
                     <p className='text-[#696a73] font-semibold text-sm'>Assigned to</p>
-                    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                        <DialogTrigger asChild>
-                            {assignedUserIds.length > 0 ? (
-                                <div className='flex -space-x-4 items-center cursor-pointer'>
-                                    {assignedUserIds.map((id) => {
-                                        const assignedUser = users?.find((u) => u.userId === id);
-                                        return assignedUser ? (
-                                            <div >
-                                                <Image
-                                                    key={id}
-                                                    src={assignedUser.pic || "/nppdp.webp"}
-                                                    alt="user"
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-full border-[2px] border-white"
-                                                />
-                                            </div>
-                                        ) : null;
-                                    })}
-
-                                </div>
-                            ) : (
-                                <div className="flex gap-1 items-center cursor-pointer">
-                                    <UserRound />
-                                    <span>Add Members</span>
-                                </div>
-                            )}
-                        </DialogTrigger>
-
+                    <Dialog>
+                        <DialogTrigger className='flex gap-1'><UserRound /> Add Members</DialogTrigger>
                         <DialogContent>
-                            <DialogHeader>
+                            <DialogHeader >
                                 <DialogTitle>Select Users</DialogTitle>
+
                                 <DialogDescription>
-                                    <div className='flex flex-col gap-6 mt-4'>
+                                    <div className='flex flex-col gap-6 mt-4' >
                                         {users?.map((user, i) => (
-                                            <div key={i} className='flex flex-col gap-1'>
+                                            <div key={i} className='flex flex-col gap-1' >
                                                 <div className='flex justify-between items-center'>
+
                                                     <div className='flex items-center gap-2'>
-                                                        <Image
-                                                            className='rounded-full'
-                                                            height={40}
-                                                            width={40}
-                                                            alt='pdp'
-                                                            src={user?.pic || "/nppdp.webp"}
-                                                        />
+                                                        <Image className='rounded-full' height={40} width={40} alt='pdp' src={user?.pic || "/nppdp.webp"} />
                                                         <div>
                                                             <p>{user?.name}</p>
-                                                            <p className='text-sm text-gray-500'>{user?.email}</p>
+                                                            <p>{user?.email}</p>
                                                         </div>
                                                     </div>
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={assignedUserIds.includes(user?.userId)}
-                                                        onChange={() => toggleAssignUser(user?.userId)}
-                                                    />
+                                                    <input type="checkbox" checked={assignedUserIds.includes(user?.userId)}
+                                                        onChange={() => toggleAssignUser(user?.userId)} />
+
                                                 </div>
                                                 <hr />
                                             </div>
                                         ))}
+
                                     </div>
+
                                 </DialogDescription>
                             </DialogHeader>
                             <DialogFooter>
@@ -265,8 +224,9 @@ function page() {
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
-                </div>
 
+
+                </div>
 
 
 
@@ -332,12 +292,7 @@ function page() {
 
 
             </div>
-            <button
-                type="submit"
-                className="uppercase bg-blue-500 hover:bg-blue-400 transition-all duration-100 font-medium cursor-pointer text-white py-2 rounded"
-            >
-                Create task
-            </button>
+            <button type="submit" className='uppercase'>Create task</button>
 
 
 

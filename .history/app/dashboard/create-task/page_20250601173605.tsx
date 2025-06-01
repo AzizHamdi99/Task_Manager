@@ -37,7 +37,7 @@ function page() {
 
     const [date, setDate] = useState()
 
-    const { users, getUsers, addTask } = useTaskStore()
+    const { users, getUsers } = useTaskStore()
     const { user, fetchUser } = useAuthStore()
 
 
@@ -77,7 +77,6 @@ function page() {
                 attachments,
                 assignedTo: assignedUserIds,
             }
-            await addTask(finalData)
 
 
 
@@ -98,7 +97,6 @@ function page() {
             setDate(undefined)
 
         } catch (error) {
-            console.log(error)
 
         }
 

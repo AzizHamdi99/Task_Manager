@@ -12,16 +12,7 @@ interface TaskStore {
     loading: boolean,
     statusCounts: StatusCounts;
     priorityCounts: PriorityCounts;
-    addTask: (data: {
-        dueDate?: string;
-        todoCheckList: { text: string; completed: boolean }[];
-        attachments: string[];
-        assignedTo: string[];
-        title: string;
-        description: string;
-        priority: string;
-        createdBy: string;
-    }) => Promise<void>;
+    addTask: (data: Omit<Task, "progress"> & { progress?: number }) => Promise<void>;
     deleteTask: (taskId: string) => Promise<void>;
     getTasks: (data: { userId: string }) => Promise<void>;
     getUsers: () => Promise<void>

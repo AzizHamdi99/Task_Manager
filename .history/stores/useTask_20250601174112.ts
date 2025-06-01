@@ -12,16 +12,7 @@ interface TaskStore {
     loading: boolean,
     statusCounts: StatusCounts;
     priorityCounts: PriorityCounts;
-    addTask: (data: {
-        dueDate?: string;
-        todoCheckList: { text: string; completed: boolean }[];
-        attachments: string[];
-        assignedTo: string[];
-        title: string;
-        description: string;
-        priority: string;
-        createdBy: string;
-    }) => Promise<void>;
+    addTask: (data: Omit<Task, "progress"> & { progress?: number }) => Promise<void>;
     deleteTask: (taskId: string) => Promise<void>;
     getTasks: (data: { userId: string }) => Promise<void>;
     getUsers: () => Promise<void>
@@ -40,16 +31,19 @@ export const useTaskStore = create<TaskStore>((set) => ({
             set({ loading: true });
 
             const res = await axios.post("/api/addTask", data);
-            const newTask: Task = res.data.task;
+            const newTask: Task = res.data.task; // you should return the created task from the API
 
             set((state) => {
+                // Update tasks
                 const updatedTasks = state.tasks ? [...state.tasks, newTask] : [newTask];
 
+                // Update statusCounts
                 const updatedStatusCounts = { ...state.statusCounts };
-                updatedStatusCounts[newTask.status as keyof StatusCounts]++;
+                updatedStatusCounts[newTask.status]++;
 
+                // Update priorityCounts
                 const updatedPriorityCounts = { ...state.priorityCounts };
-                updatedPriorityCounts[newTask.priority as keyof PriorityCounts]++;
+                updatedPriorityCounts[newTask.priority]++;
 
                 return {
                     tasks: updatedTasks,
@@ -64,41 +58,23 @@ export const useTaskStore = create<TaskStore>((set) => ({
         }
     },
 
-
     deleteTask: async (taskId) => {
+
         try {
-            set({ loading: true });
+            set({ loading: true })
+            await axios.post(`/api/deletetask/${taskId}`)
+            set((state) => ({
+                tasks: state.tasks?.filter((task) => task.id !== taskId) || [],
+                loading: false,
+            }));
 
-            // Optional: Find the task before deleting so we know its status/priority
-            const taskToDelete = useTaskStore.getState().tasks?.find((t) => t.id === taskId);
-
-            await axios.post(`/api/deletetask/${taskId}`);
-
-            set((state) => {
-                const updatedTasks = state.tasks?.filter((task) => task.id !== taskId) || [];
-
-                const updatedStatusCounts = { ...state.statusCounts };
-                const updatedPriorityCounts = { ...state.priorityCounts };
-
-                if (taskToDelete) {
-                    updatedStatusCounts[taskToDelete.status as keyof StatusCounts]--;
-                    updatedPriorityCounts[taskToDelete.priority as keyof PriorityCounts]--;
-                }
-
-                return {
-                    tasks: updatedTasks,
-                    statusCounts: updatedStatusCounts,
-                    priorityCounts: updatedPriorityCounts,
-                    loading: false,
-                };
-            });
         } catch (error) {
             console.error("Error deleting task:", error);
             set({ loading: false });
+
         }
+
     },
-
-
     getTasks: async (userId) => {
 
         try {

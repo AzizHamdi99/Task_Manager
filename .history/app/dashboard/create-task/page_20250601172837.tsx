@@ -37,7 +37,7 @@ function page() {
 
     const [date, setDate] = useState()
 
-    const { users, getUsers, addTask } = useTaskStore()
+    const { users, getUsers } = useTaskStore()
     const { user, fetchUser } = useAuthStore()
 
 
@@ -69,40 +69,31 @@ function page() {
 
     const handleSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault()
-        try {
-            const finalData = {
-                ...data,
-                dueDate: date,
-                todoCheckList,
-                attachments,
-                assignedTo: assignedUserIds,
-            }
-            await addTask(finalData)
 
-
-
-            setData({
-                title: "",
-                description: "",
-                priority: "",
-                dueDate: "",
-                assignedTo: [] as string[],
-                createdBy: "",
-                todoCheckList: [] as string[],
-                attachments: [] as string[],
-            })
-            setAttachments([])
-
-            setAssignedUserIds([])
-            setTodoCheckList([])
-            setDate(undefined)
-
-        } catch (error) {
-            console.log(error)
-
+        const finalData = {
+            ...data,
+            dueDate: date,
+            todoCheckList,
+            attachments,
+            assignedTo: assignedUserIds,
         }
 
+        console.log("Submitted Task:", finalData)
+        setData({
+            title: "",
+            description: "",
+            priority: "",
+            dueDate: "",
+            assignedTo: [] as string[],
+            createdBy: "",
+            todoCheckList: [] as string[],
+            attachments: [] as string[],
+        })
+        setAttachments([])
 
+        setAssignedUserIds([])
+        setTodoCheckList([])
+        setDate(undefined)
     }
     useEffect(() => {
         if (!user) {
@@ -198,26 +189,24 @@ function page() {
                     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                         <DialogTrigger asChild>
                             {assignedUserIds.length > 0 ? (
-                                <div className='flex -space-x-4 items-center cursor-pointer'>
+                                <div className='flex items-center gap-2 cursor-pointer'>
                                     {assignedUserIds.map((id) => {
                                         const assignedUser = users?.find((u) => u.userId === id);
                                         return assignedUser ? (
-                                            <div >
-                                                <Image
-                                                    key={id}
-                                                    src={assignedUser.pic || "/nppdp.webp"}
-                                                    alt="user"
-                                                    width={40}
-                                                    height={40}
-                                                    className="rounded-full border-[2px] border-white"
-                                                />
-                                            </div>
+                                            <Image
+                                                key={id}
+                                                src={assignedUser.pic || "/nppdp.webp"}
+                                                alt="user"
+                                                width={40}
+                                                height={40}
+                                                className="rounded-full border-[2px] border-white"
+                                            />
                                         ) : null;
                                     })}
 
                                 </div>
                             ) : (
-                                <div className="flex gap-1 items-center cursor-pointer">
+                                <div className='flex gap-1 items-center cursor-pointer'>
                                     <UserRound />
                                     <span>Add Members</span>
                                 </div>

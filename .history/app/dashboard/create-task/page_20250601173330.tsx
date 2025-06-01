@@ -37,7 +37,7 @@ function page() {
 
     const [date, setDate] = useState()
 
-    const { users, getUsers, addTask } = useTaskStore()
+    const { users, getUsers } = useTaskStore()
     const { user, fetchUser } = useAuthStore()
 
 
@@ -69,40 +69,31 @@ function page() {
 
     const handleSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault()
-        try {
-            const finalData = {
-                ...data,
-                dueDate: date,
-                todoCheckList,
-                attachments,
-                assignedTo: assignedUserIds,
-            }
-            await addTask(finalData)
 
-
-
-            setData({
-                title: "",
-                description: "",
-                priority: "",
-                dueDate: "",
-                assignedTo: [] as string[],
-                createdBy: "",
-                todoCheckList: [] as string[],
-                attachments: [] as string[],
-            })
-            setAttachments([])
-
-            setAssignedUserIds([])
-            setTodoCheckList([])
-            setDate(undefined)
-
-        } catch (error) {
-            console.log(error)
-
+        const finalData = {
+            ...data,
+            dueDate: date,
+            todoCheckList,
+            attachments,
+            assignedTo: assignedUserIds,
         }
 
+        console.log("Submitted Task:", finalData)
+        setData({
+            title: "",
+            description: "",
+            priority: "",
+            dueDate: "",
+            assignedTo: [] as string[],
+            createdBy: "",
+            todoCheckList: [] as string[],
+            attachments: [] as string[],
+        })
+        setAttachments([])
 
+        setAssignedUserIds([])
+        setTodoCheckList([])
+        setDate(undefined)
     }
     useEffect(() => {
         if (!user) {

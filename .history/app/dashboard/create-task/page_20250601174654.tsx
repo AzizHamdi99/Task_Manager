@@ -98,7 +98,6 @@ function page() {
             setDate(undefined)
 
         } catch (error) {
-            console.log(error)
 
         }
 
