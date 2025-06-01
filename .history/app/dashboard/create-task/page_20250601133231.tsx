@@ -1,0 +1,47 @@
+import React from 'react'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
+function page() {
+    return (
+        <div>
+            <p>Create Task</p>
+            <div>
+                <label htmlFor="">Task Title</label>
+                <input type="text" placeholder='Create App UI' />
+            </div>
+            <div>
+                <label htmlFor="">Description</label>
+                <textarea name="" id="" placeholder='Describe task'></textarea>
+            </div>
+            <div>
+                <div>
+                    <label htmlFor="">Priority</label>
+                    <Select>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Low">Low</SelectItem>
+                            <SelectItem value="Meduim">Meduim</SelectItem>
+                            <SelectItem value="Hard">Hard</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+    )
+}
+
+export default page
