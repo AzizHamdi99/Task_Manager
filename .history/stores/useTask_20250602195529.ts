@@ -163,7 +163,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
             set({ loading: false })
             await axios.put(`/api/updateTask/${taskId}`, data)
             set({ loading: false })
-            toast.success("Task updated successfully")
+            toast.up("Task adde successfully")
 
         } catch (error) {
             console.error("Error geting task:", error);

@@ -38,7 +38,6 @@ export default function RootLayout({
 
       <body className={poppins.className} >
         {children}
-        <ToastContainer position="top-right" autoClose={3000} />
       </body>
     </html>
   );

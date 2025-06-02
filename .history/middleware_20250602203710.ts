@@ -40,7 +40,7 @@ export async function middleware(req: NextRequest) {
 
     // Admin-only routes
     const adminOnlyPaths = [
-        // '/dashboard/updateTask/',
+        '/dashboard/updateTask/',
         '/dashboard/create-task/',
         '/dashboard/teamMembers/',
     ];

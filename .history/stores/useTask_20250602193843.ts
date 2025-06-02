@@ -74,7 +74,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
                     loading: false,
                 };
             });
-            toast.success("Task added successfully")
+            toast.success(res.message)
         } catch (error) {
             console.error("Error adding task:", error);
             set({ loading: false });
@@ -109,7 +109,6 @@ export const useTaskStore = create<TaskStore>((set) => ({
                     loading: false,
                 };
             });
-            toast.error("Task deleted successfully")
         } catch (error) {
             console.error("Error deleting task:", error);
             set({ loading: false });
@@ -163,7 +162,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
             set({ loading: false })
             await axios.put(`/api/updateTask/${taskId}`, data)
             set({ loading: false })
-            toast.success("Task updated successfully")
+
 
         } catch (error) {
             console.error("Error geting task:", error);
@@ -172,7 +171,6 @@ export const useTaskStore = create<TaskStore>((set) => ({
         }
 
     },
-
     updateTodo: async (data) => {
 
         try {

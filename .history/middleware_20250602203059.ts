@@ -40,7 +40,7 @@ export async function middleware(req: NextRequest) {
 
     // Admin-only routes
     const adminOnlyPaths = [
-        // '/dashboard/updateTask/',
+        '/dashboard/updateTask/',
         '/dashboard/create-task/',
         '/dashboard/teamMembers/',
     ];
@@ -52,11 +52,11 @@ export async function middleware(req: NextRequest) {
     }
 
     // User-only route: /dashboard/task/[taskId]
-    /* if (pathname.startsWith('/dashboard/task/')) {
-         if (role !== 'user') {
-             return NextResponse.redirect(new URL('/unauthorized', req.url));
-         }
-     }*/
+    if (pathname.startsWith('/dashboard/task/')) {
+        if (role !== 'user') {
+            return NextResponse.redirect(new URL('/unauthorized', req.url));
+        }
+    }
 
     // All other authenticated routes
     return NextResponse.next();
