@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 function page() {
     const params = useParams()
     const taskId = params.taskId
-    const { task, getTask, users, getUsers, loading, updateTodo } = useTaskStore()
+    const { task, getTask, users, getUsers, loading } = useTaskStore()
 
     useEffect(() => {
         getTask(taskId as string)
@@ -18,24 +18,6 @@ function page() {
     useEffect(() => {
         getUsers()
     }, [])
-
-    const handelChange = async (i: number, check: boolean) => {
-        const data = {
-            taskId: taskId as string,
-            index: i,
-            state: check
-        }
-
-        try {
-            await updateTodo(data)
-
-            await getTask(taskId as string)
-
-        } catch (error) {
-            console.error("Erreur in updating todo", error)
-        }
-
-    }
 
     if (loading) {
         return (
@@ -83,13 +65,7 @@ function page() {
                 <div className='flex flex-col gap-4'>
                     {task?.todoCheckList.map((t, i) => (
                         <div key={i} className='flex items-center gap-3 font-semibold'>
-                            <input
-                                className='w-4 h-4 cursor-pointer'
-                                type="checkbox"
-                                checked={t.completed}
-                                onChange={(e) => handelChange(i, e.target.checked)}
-                            />
-
+                            <input className='w-4 h-4 cursor-pointer' type="checkbox" />
                             <p className='font-meduim text-[#2b2b2b]  '>{t.text}</p>
                         </div>
                     ))}

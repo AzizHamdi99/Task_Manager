@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 function page() {
     const params = useParams()
     const taskId = params.taskId
-    const { task, getTask, users, getUsers, loading, updateTodo } = useTaskStore()
+    const { task, getTask, users, getUsers, loading } = useTaskStore()
 
     useEffect(() => {
         getTask(taskId as string)
@@ -18,24 +18,6 @@ function page() {
     useEffect(() => {
         getUsers()
     }, [])
-
-    const handelChange = async (i: number, check: boolean) => {
-        const data = {
-            taskId: taskId as string,
-            index: i,
-            state: check
-        }
-
-        try {
-            await updateTodo(data)
-
-            await getTask(taskId as string)
-
-        } catch (error) {
-            console.error("Erreur in updating todo", error)
-        }
-
-    }
 
     if (loading) {
         return (
@@ -50,7 +32,7 @@ function page() {
         <div className='flex flex-col gap-3 m-6 bg-white rounded-xl p-6 w-4xl shadow-md'>
             <div className='flex justify-between items-center' >
                 <p className='text-2xl font-semibold text-[#2b2b2b]'> {task?.title}</p>
-                <p className={task?.status === "Pending" ? "bg-[#f2e3fb] text-[#8749bd] text-sm p-1 max-w-fit px-3 rounded-md font-semibold" : task?.status === "In Progress" ? "bg-blue-100 text-blue-700 text-sm p-1 max-w-fit px-3 rounded-md font-semibold" : "bg-[#c7f8da] text-[#448b5b] text-sm p-1 max-w-fit px-3 rounded-md font-semibold"} >{task?.status}</p>
+                <p >{task?.status}</p>
             </div>
             <div className='flex flex-col gap-1'>
                 <p className='text-[#696a73] font-semibold text-md'>Description</p>
@@ -80,16 +62,10 @@ function page() {
             </div>
             <div className='flex flex-col gap-3'>
                 <p className='text-[#696a73] font-semibold text-md'>Todo Checklist</p>
-                <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-2'>
                     {task?.todoCheckList.map((t, i) => (
                         <div key={i} className='flex items-center gap-3 font-semibold'>
-                            <input
-                                className='w-4 h-4 cursor-pointer'
-                                type="checkbox"
-                                checked={t.completed}
-                                onChange={(e) => handelChange(i, e.target.checked)}
-                            />
-
+                            <input className='w-4 h-4 cursor-pointer' type="checkbox" />
                             <p className='font-meduim text-[#2b2b2b]  '>{t.text}</p>
                         </div>
                     ))}
@@ -99,15 +75,15 @@ function page() {
             {task?.attachments && task.attachments.length > 0 &&
                 <div className='flex flex-col gap-2'>
                     <p className='text-[#696a73] font-semibold text-md'>Attachments</p>
-                    <div className='flex flex-col gap-3'>
+                    <div>
                         {task.attachments.map((att, i) => (
-                            <a className='flex items-center justify-between py-1.5 bg-[#f6f8fa] px-3 rounded-md' href={att} target='blank'>
-                                <div key={i} className='font-semibold flex gap-3 items-center '>
+                            <div>
+                                <div key={i} className='font-semibold'>
                                     <span>{i + 1}</span>
-                                    <p className='font-meduim text-[#2b2b2b] '>{att}</p>
+                                    <a href={att} target='blank' className='font-meduim text-[#2b2b2b] '>{att}</a>
                                 </div>
                                 <ExternalLink size={20} />
-                            </a>
+                            </div>
                         ))}
 
                     </div>

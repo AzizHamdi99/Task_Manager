@@ -19,24 +19,6 @@ function page() {
         getUsers()
     }, [])
 
-    const handelChange = async (i: number, check: boolean) => {
-        const data = {
-            taskId: taskId as string,
-            index: i,
-            state: check
-        }
-
-        try {
-            await updateTodo(data)
-
-            await getTask(taskId as string)
-
-        } catch (error) {
-            console.error("Erreur in updating todo", error)
-        }
-
-    }
-
     if (loading) {
         return (
             <div className=" h-screen flex items-center justify-center">
@@ -87,7 +69,7 @@ function page() {
                                 className='w-4 h-4 cursor-pointer'
                                 type="checkbox"
                                 checked={t.completed}
-                                onChange={(e) => handelChange(i, e.target.checked)}
+                                onChange={(e) => updateTodo({ taskId: task.id, index: i, state: e.target.checked })}
                             />
 
                             <p className='font-meduim text-[#2b2b2b]  '>{t.text}</p>

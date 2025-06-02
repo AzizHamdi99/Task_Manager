@@ -32,7 +32,7 @@ function page() {
             await getTask(taskId as string)
 
         } catch (error) {
-            console.error("Erreur in updating todo", error)
+
         }
 
     }

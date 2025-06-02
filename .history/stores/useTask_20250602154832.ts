@@ -173,12 +173,7 @@ export const useTaskStore = create<TaskStore>((set) => ({
 
         try {
             set({ loading: true })
-            await axios.put("/api/updateTodo", data)
-            set({ loading: false })
         } catch (error) {
-
-            console.error("Error unpdting todo:", error);
-            set({ loading: false });
 
         }
 
