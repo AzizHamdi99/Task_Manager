@@ -84,7 +84,7 @@ function Tasks() {
 
                             <div onClick={handleClick} key={i} className='bg-white p-4 shadow-md rounded-md flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-all duration-300'>
                                 <div className='flex gap-4 items-center'>
-                                    <p className={task?.status === "Pending" ? "bg-[#f2e3fb] text-[#8749bd] text-sm p-1 max-w-fit px-3 rounded-md" : task?.status === "In Progress" ? "bg-blue-100 text-blue-700 text-sm p-1 max-w-fit px-3 rounded-md" : "bg-[#c7f8da] text-[#448b5b] text-sm p-1 max-w-fit px-3 rounded-md"}>{task?.status}</p>
+                                    <p className={task?.status === "Pending" ? "bg-[#f2e3fb] text-[#8749bd] text-sm p-1 max-w-fit px-3 rounded-md" : task?.status === "In Progress" ? "bg-blue-100 text-blue-500 text-sm p-1 max-w-fit px-3 rounded-md" : "bg-[#c7f8da] text-[#448b5b] text-sm p-1 max-w-fit px-3 rounded-md"}>{task?.status}</p>
                                     <p className={task?.priority === "High" ? "bg-[#fcdce0] text-[#d16f7b] text-sm p-1 max-w-fit px-3 rounded-md" : task?.priority === "Meduim" ? "bg-[#fae3c5] text-[#e87d1a] text-sm p-1 max-w-fit px-3 rounded-md" : "bg-[#c7f8da] text-[#448b5b] text-sm p-1 max-w-fit px-3 rounded-md"}>{task?.priority} Priority</p>
                                 </div>
                                 <div className='mt-1 flex flex-col gap-1'>
