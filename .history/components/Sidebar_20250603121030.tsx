@@ -39,17 +39,8 @@ const Sidebar = () => {
 
     return (
         <div className=' border-r-1 border-gray-200 w-1/5 shadow-sm h-screen flex flex-col '>
-            <div className='flex items-center justify-center my-4 '>
-                <Image
-                    width={100}
-                    height={100}
-                    src={user?.pic ? user.pic : "/nppdp.webp"}
-                    alt='no pdp'
-                    className='rounded-full'
-                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
-
-                />
-
+            <div className='flex items-center justify-center my-4'>
+                <Image width={100} height={100} src={user?.pic ? user.pic : "/nppdp.webp"} alt='no pdp' className='rounded-full' />
             </div>
             <div className='text-center flex flex-col items-center mb-5'>
                 {user?.role === "ADMIN" && <p className='text-[10px] text-white bg-blue-500 px-2 py-0.5 rounded-sm w-fit'>{user?.role}</p>}

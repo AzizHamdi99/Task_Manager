@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const newUser = await User.create({
         fullname,
         email,
-        pic: uploadResponse.secure_url,
+        pic: uploadResponse,
         password: hashedPassword,
         role: code === process.env.ADMIN_CODE ? "ADMIN" : "USER"
     })

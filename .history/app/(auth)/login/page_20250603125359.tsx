@@ -1,6 +1,6 @@
 "use client"
 import { useAuthStore } from '@/stores/useUser'
-import { BarChart4, BookOpenCheck, CalendarDays, CheckCircle2, Eye, EyeOff, ListChecks, Star, Trophy, Users2 } from 'lucide-react'
+import { BarChart4, BookOpenCheck, CalendarDays, CheckCircle2, Eye, EyeOff, ListChecks, Users2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { HtmlHTMLAttributes, useState } from 'react'
@@ -37,11 +37,11 @@ function login() {
   const [showPassword, setShowPassword] = useState(false)
   return (
     // left side
-    <div className='flex items-center justify-between'>
+    <div className='flex ite'>
       <div className='flex flex-col'>
         <div className='flex gap-1  '>
           <BookOpenCheck color="blue" size={40} />
-          <p className='font-bold text-3xl text-black mb-44'>Task Manager</p>
+          <p className='font-bold text-2xl text-black mb-44'>Task Manager</p>
         </div>
         <h2 className='font-bold text-2xl text-black'>Welcome Back </h2>
         <p className='text-gray-900 text-sm font-extralight mt-1 '>Please enter your details to log in</p>
@@ -63,57 +63,39 @@ function login() {
         </form>
         <p className='text-[15px] font-medium'>Don't have an account? <Link className='text-blue-500 underline' href={'/register'}>SignUp</Link></p>
 
-
+        {/* right side */}
 
 
 
       </div>
-      {/* Right side - Enhanced Design */}
-      {/* Right side - Simple Design */}
-      {/* Right side - Matching Left Side Theme */}
-      {/* Right side - Blue theme with large icons */}
-      <div className="hidden md:flex w-1/2 bg-blue-600 h-screen flex-col items-center justify-center p-10 text-white">
-        <div className="text-center mb-12">
-          <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-            <BookOpenCheck size={48} className="text-white" />
-          </div>
-          <h2 className="font-bold text-3xl mb-4">
-            Welcome to Task Manager
-          </h2>
-          <p className="text-blue-100 text-lg">
-            Your productivity companion for better task management
+      <div className="hidden md:flex w-1/2 bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex-col items-center justify-center p-10 space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-2">Boost Your Productivity</h2>
+          <p className="text-md text-white/80">
+            Task Manager helps you organize, track, and collaborate better than ever.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-              <ListChecks size={24} className="text-white" />
-            </div>
-            <div>
-              <h3 className="font-medium text-white">Organize Tasks</h3>
-              <p className="text-blue-100 text-sm">Keep everything in order</p>
-            </div>
+        <div className="grid grid-cols-2 gap-6 text-white text-sm">
+          <div className="flex items-center gap-3">
+            <ListChecks size={28} />
+            <span>Organize Tasks</span>
           </div>
-
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-              <Users2 size={24} className="text-white" />
-            </div>
-            <div>
-              <h3 className="font-medium text-white">Team Collaboration</h3>
-              <p className="text-blue-100 text-sm">Work together seamlessly</p>
-            </div>
+          <div className="flex items-center gap-3">
+            <CalendarDays size={28} />
+            <span>Manage Deadlines</span>
           </div>
-
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-              <BarChart4 size={24} className="text-white" />
-            </div>
-            <div>
-              <h3 className="font-medium text-white">Track Progress</h3>
-              <p className="text-blue-100 text-sm">Monitor your achievements</p>
-            </div>
+          <div className="flex items-center gap-3">
+            <BarChart4 size={28} />
+            <span>Track Progress</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Users2 size={28} />
+            <span>Team Collaboration</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <CheckCircle2 size={28} />
+            <span>Achieve Goals</span>
           </div>
         </div>
       </div>

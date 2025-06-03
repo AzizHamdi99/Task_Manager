@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { BarChart4, BookOpenCheck, Camera, CheckCircle2, Eye, EyeOff, Users2 } from 'lucide-react'
+import { BookOpenCheck, Camera, Eye, EyeOff } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -62,11 +62,11 @@ function register() {
     }
 
     return (
-        <div className='flex items-center justify-between gap-15 '>
+        <div>
             <div className='flex flex-col w-1/2'>
                 <div className='flex gap-1  '>
                     <BookOpenCheck color="blue" size={40} />
-                    <p className='font-bold text-3xl text-black mb-28'>Task Manager</p>
+                    <p className='font-bold text-2xl text-black mb-28'>Task Manager</p>
                 </div>
                 <h2 className='font-bold text-2xl text-black'>Create an account </h2>
 
@@ -133,68 +133,6 @@ function register() {
 
 
 
-            </div>
-            {/* Right side - SignUp Blue theme */}
-            <div className="hidden md:flex w-1/2 bg-blue-600 flex-col items-center h-screen justify-center p-10 text-white">
-                <div className="text-center mb-12">
-                    <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <Users2 size={48} className="text-white" />
-                    </div>
-                    <h2 className="font-bold text-3xl mb-4">
-                        Join Our Community
-                    </h2>
-                    <p className="text-blue-100 text-lg">
-                        Start your journey with thousands of productive teams
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 w-full max-w-sm">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                            <CheckCircle2 size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-white">Free to Start</h3>
-                            <p className="text-blue-100 text-sm">No credit card required</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                            <BookOpenCheck size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-white">Easy Setup</h3>
-                            <p className="text-blue-100 text-sm">Get started in minutes</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                            <Users2 size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-white">Team Ready</h3>
-                            <p className="text-blue-100 text-sm">Invite your team instantly</p>
-                        </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                            <BarChart4 size={24} className="text-white" />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-white">Track Everything</h3>
-                            <p className="text-blue-100 text-sm">Monitor progress & analytics</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="mt-8 text-center">
-                    <p className="text-blue-100 text-sm">
-                        Trusted by 10,000+ teams worldwide
-                    </p>
-                </div>
             </div>
 
         </div>

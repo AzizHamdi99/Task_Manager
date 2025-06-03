@@ -209,7 +209,7 @@ function page() {
                                                     alt="user"
                                                     width={40}
                                                     height={40}
-                                                    className="rounded-full "
+                                                    className="rounded-full border-[2px] border-white"
                                                     style={{ width: "40px", height: "40px", objectFit: "cover" }}
                                                 />
                                             </div>
@@ -242,10 +242,9 @@ function page() {
                                                             width={40}
                                                             alt='pdp'
                                                             src={user?.pic || "/nppdp.webp"}
-                                                            style={{ width: "40px", height: "40px", objectFit: "cover" }}
                                                         />
                                                         <div>
-                                                            <p className='text-[#2b2b2b] font-medium'>{user?.name}</p>
+                                                            <p>{user?.name}</p>
                                                             <p className='text-sm text-gray-500'>{user?.email}</p>
                                                         </div>
                                                     </div>

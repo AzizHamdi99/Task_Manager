@@ -46,7 +46,6 @@ const Sidebar = () => {
                     src={user?.pic ? user.pic : "/nppdp.webp"}
                     alt='no pdp'
                     className='rounded-full'
-                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
 
                 />
 

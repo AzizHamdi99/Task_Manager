@@ -62,11 +62,11 @@ function register() {
     }
 
     return (
-        <div className='flex items-center justify-between gap-15 '>
+        <div>
             <div className='flex flex-col w-1/2'>
                 <div className='flex gap-1  '>
                     <BookOpenCheck color="blue" size={40} />
-                    <p className='font-bold text-3xl text-black mb-28'>Task Manager</p>
+                    <p className='font-bold text-2xl text-black mb-28'>Task Manager</p>
                 </div>
                 <h2 className='font-bold text-2xl text-black'>Create an account </h2>
 
@@ -135,7 +135,7 @@ function register() {
 
             </div>
             {/* Right side - SignUp Blue theme */}
-            <div className="hidden md:flex w-1/2 bg-blue-600 flex-col items-center h-screen justify-center p-10 text-white">
+            <div className="hidden md:flex w-1/2 bg-blue-600 flex-col items-center justify-center p-10 text-white">
                 <div className="text-center mb-12">
                     <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
                         <Users2 size={48} className="text-white" />

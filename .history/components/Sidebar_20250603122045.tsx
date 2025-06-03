@@ -39,14 +39,13 @@ const Sidebar = () => {
 
     return (
         <div className=' border-r-1 border-gray-200 w-1/5 shadow-sm h-screen flex flex-col '>
-            <div className='flex items-center justify-center my-4 '>
+            <div className='flex items-center justify-center my-4 w-[100px] h-[100px]'>
                 <Image
                     width={100}
                     height={100}
                     src={user?.pic ? user.pic : "/nppdp.webp"}
                     alt='no pdp'
                     className='rounded-full'
-                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
 
                 />
 

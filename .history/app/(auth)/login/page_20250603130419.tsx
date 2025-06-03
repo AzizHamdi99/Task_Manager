@@ -41,7 +41,7 @@ function login() {
       <div className='flex flex-col'>
         <div className='flex gap-1  '>
           <BookOpenCheck color="blue" size={40} />
-          <p className='font-bold text-3xl text-black mb-44'>Task Manager</p>
+          <p className='font-bold text-2xl text-black mb-44'>Task Manager</p>
         </div>
         <h2 className='font-bold text-2xl text-black'>Welcome Back </h2>
         <p className='text-gray-900 text-sm font-extralight mt-1 '>Please enter your details to log in</p>
@@ -72,7 +72,7 @@ function login() {
       {/* Right side - Simple Design */}
       {/* Right side - Matching Left Side Theme */}
       {/* Right side - Blue theme with large icons */}
-      <div className="hidden md:flex w-1/2 bg-blue-600 h-screen flex-col items-center justify-center p-10 text-white">
+      <div className="hidden md:flex w-1/2 bg-blue-600 h-full flex-col items-center justify-center p-10 text-white">
         <div className="text-center mb-12">
           <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
             <BookOpenCheck size={48} className="text-white" />

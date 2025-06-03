@@ -1,4 +1,7 @@
 "use client"
+import { useTaskStore } from '@/stores/useTask'
+import { useParams, useRouter } from 'next/navigation'
+
 import React, { useEffect, useState } from 'react'
 import {
     Select,
@@ -28,34 +31,41 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { useTaskStore } from '@/stores/useTask'
+
 import Image from 'next/image'
 import { useAuthStore } from '@/stores/useUser'
+import { log } from 'console'
 
+const updatePage = () => {
 
-function page() {
-
-    const [date, setDate] = useState()
-
-    const { users, getUsers, addTask } = useTaskStore()
+    const params = useParams()
+    const taskId = params.taskId
+    const { task, getTask, users, getUsers, addTask, updateTask, deleteTask } = useTaskStore()
     const { user, fetchUser } = useAuthStore()
+    const router = useRouter()
 
 
-    const [task, setTask] = useState("")
+    const [currenttask, setcurrentTask] = useState("")
     const [attachment, setAttachment] = useState("")
     const [dialogOpen, setDialogOpen] = useState(false)
 
+    useEffect(() => {
+        getTask(taskId)
+    }, [])
+    const [date, setDate] = useState<Date | undefined>(undefined);
 
     const [data, setData] = useState({
         title: "",
         description: "",
         priority: "",
-        dueDate: "",
+        dueDate: null as Date | null,
         assignedTo: [] as string[],
         createdBy: "",
-        todoCheckList: [] as string[],
+        todoCheckList: [] as { text: string, completed: boolean }[],
         attachments: [] as string[],
     })
+
+    //console.log(task)
     const [attachments, setAttachments] = useState<string[]>([])
     const [todoCheckList, setTodoCheckList] = useState<{ text: string, completed: boolean }[]>([])
 
@@ -65,6 +75,8 @@ function page() {
 
 
     }, [])
+
+
 
 
     const handleSubmitForm = async (e: React.FormEvent) => {
@@ -77,7 +89,13 @@ function page() {
                 attachments,
                 assignedTo: assignedUserIds,
             }
-            await addTask(finalData)
+            console.log(finalData)
+            await updateTask(taskId, finalData)
+
+            router.push("/dashboard/Tasks")
+
+
+
 
 
 
@@ -85,11 +103,11 @@ function page() {
                 title: "",
                 description: "",
                 priority: "",
-                dueDate: "",
-                assignedTo: [] as string[],
+                dueDate: null,
+                assignedTo: [],
                 createdBy: "",
-                todoCheckList: [] as string[],
-                attachments: [] as string[],
+                todoCheckList: [],
+                attachments: [],
             })
             setAttachments([])
 
@@ -119,11 +137,37 @@ function page() {
         }
     }, [user]);
 
+    useEffect(() => {
+        if (task) {
+            console.log('taskk hereee')
+            console.log(task)
+            setData({
+                title: task.title || "",
+                description: task.description || "",
+                priority: task.priority || "",
+                dueDate: task.dueDate || "",
+                assignedTo: task.assignedTo || [],
+                createdBy: task.createdBy || "",
+                todoCheckList: task.todoCheckList || [],
+                attachments: task.attachments || [],
+            });
+            setDate(task.dueDate ? new Date(task.dueDate) : undefined);
+            setAttachments(task.attachments || []);
+            setTodoCheckList(task.todoCheckList as { text: string, completed: boolean }[]);
+
+            setAssignedUserIds(task.assignedTo || []);
+        }
+    }, [task]);
+    useEffect(() => {
+        console.log("data updated", data);
+    }, [data]);
+
+
 
     const handleAddTodo = () => {
-        if (task.trim()) {
-            setTodoCheckList(prev => [...prev, { text: task.trim(), completed: false }])
-            setTask("")
+        if (currenttask.trim()) {
+            setTodoCheckList(prev => [...prev, { text: currenttask.trim(), completed: false }])
+            setcurrentTask("")
         }
     }
 
@@ -143,9 +187,45 @@ function page() {
     function handleDone() {
         setDialogOpen(false)
     }
+
+    const handelDelete = async (taskId: string) => {
+        try {
+            await deleteTask(taskId)
+            router.push('/dashboard/Tasks')
+
+        } catch (error) {
+            console.log("Error in deleting")
+
+        }
+
+    }
+
     return (
         <form onSubmit={handleSubmitForm} className='flex flex-col m-6 gap-3 w-4xl rounded-xl shadow-md p-6 bg-white'>
-            <p className='text-2xl font-semibold text-[#2b2b2b]'>Create Task</p>
+            <div className='flex items-center justify-between'>
+                <p className='text-2xl font-semibold text-[#2b2b2b]'>Update Task</p>
+                <Dialog>
+                    <DialogTrigger className='flex gap-2  rounded-sm p-2 text-sm cursor-pointer text-white bg-red-600'>
+                        <Trash2 size={20} />
+                        <p>Delete</p>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Delete Task</DialogTitle>
+                            <DialogDescription>
+                                Are you sure you want to delete this task
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button className='cursor-pointer' variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="button" className='cursor-pointer' variant="destructive" onClick={() => handelDelete(taskId)}>Delete</Button>
+                        </DialogFooter>
+                    </DialogContent>
+
+                </Dialog>
+            </div>
             <div className='flex flex-col gap-1.5'>
                 <p className='text-[#696a73] font-semibold text-sm' >Task Title</p>
                 <input value={data.title} onChange={(e) => setData({ ...data, title: e.target.value })} type="text" className='px-2 py-1.5 rounded-sm outline-none border-[1px] border-gray-200 w-full' placeholder='Create App UI' />
@@ -157,7 +237,7 @@ function page() {
             <div className='flex justify-between items-center'>
                 <div className='flex flex-col gap-1.5'>
                     <p className='text-[#696a73] font-semibold text-sm' >Priority</p>
-                    <Select onValueChange={(value) => setData({ ...data, priority: value })}>
+                    <Select onValueChange={(value) => setData({ ...data, priority: value })} value={data.priority}   >
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Theme" />
                         </SelectTrigger>
@@ -209,8 +289,7 @@ function page() {
                                                     alt="user"
                                                     width={40}
                                                     height={40}
-                                                    className="rounded-full "
-                                                    style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                                                    className="rounded-full border-[2px] border-white"
                                                 />
                                             </div>
                                         ) : null;
@@ -242,10 +321,9 @@ function page() {
                                                             width={40}
                                                             alt='pdp'
                                                             src={user?.pic || "/nppdp.webp"}
-                                                            style={{ width: "40px", height: "40px", objectFit: "cover" }}
                                                         />
                                                         <div>
-                                                            <p className='text-[#2b2b2b] font-medium'>{user?.name}</p>
+                                                            <p>{user?.name}</p>
                                                             <p className='text-sm text-gray-500'>{user?.email}</p>
                                                         </div>
                                                     </div>
@@ -277,7 +355,7 @@ function page() {
             </div>
             <div className='flex flex-col gap-3'>
                 <p className='text-[#696a73] font-semibold text-sm'>TODO Checklist</p>
-                {todoCheckList.length > 0 &&
+                {todoCheckList?.length > 0 &&
                     <div className='flex flex-col gap-3'>
                         {todoCheckList.map((todo, i) => (
                             <div className='flex justify-between items-center py-1.5 bg-[#f6f8fa] px-3 rounded-sm' key={i}>
@@ -295,7 +373,7 @@ function page() {
 
                     </div>}
                 <div className='flex justify-between items-center gap-5'>
-                    <input type="text" value={task} onChange={(e) => setTask(e.target.value)} placeholder='Enter Task' className='px-2 py-1.5 rounded-sm outline-none border-[1px] border-gray-200 w-full' />
+                    <input type="text" value={currenttask} onChange={(e) => setcurrentTask(e.target.value)} placeholder='Enter Task' className='px-2 py-1.5 rounded-sm outline-none border-[1px] border-gray-200 w-full' />
                     <div className=' flex items-center gap-2 px-3 py-1.5 bg-[#e3e4e6] cursor-pointer rounded-sm' onClick={handleAddTodo}>
                         <Plus />
                         <p className='text-sm'>Add</p>
@@ -340,7 +418,7 @@ function page() {
                 type="submit"
                 className="uppercase bg-blue-500 hover:bg-blue-400 transition-all duration-100 font-medium cursor-pointer text-white py-2 rounded"
             >
-                Create task
+                Update task
             </button>
 
 
@@ -351,4 +429,4 @@ function page() {
     )
 }
 
-export default page
+export default updatePage

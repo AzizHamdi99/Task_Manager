@@ -41,7 +41,7 @@ function login() {
       <div className='flex flex-col'>
         <div className='flex gap-1  '>
           <BookOpenCheck color="blue" size={40} />
-          <p className='font-bold text-3xl text-black mb-44'>Task Manager</p>
+          <p className='font-bold text-2xl text-black mb-44'>Task Manager</p>
         </div>
         <h2 className='font-bold text-2xl text-black'>Welcome Back </h2>
         <p className='text-gray-900 text-sm font-extralight mt-1 '>Please enter your details to log in</p>
