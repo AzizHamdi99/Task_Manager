@@ -34,13 +34,13 @@ function login() {
 
 
   }
-  /*if (loading) {
+  if (loading) {
     return (
       <div className="w-4/5 h-screen flex items-center justify-center">
         <CircularProgress />
       </div>
     );
-  }*/
+  }
 
   const [showPassword, setShowPassword] = useState(false)
   return (
