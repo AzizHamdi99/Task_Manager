@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 
 interface PriorityCounts {
     low: number;
-    meduim: number; // keeping your spelling for now
+    meduim: number;
     high: number;
 }
 
@@ -21,7 +21,7 @@ function StatusBarChart({ PriorityData }: { PriorityData: PriorityCounts }) {
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={chartData}
-                        barCategoryGap="5%" // Minimal gap between bars
+                        barCategoryGap="5%"
                         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                     >
                         <XAxis dataKey="name" />
@@ -29,8 +29,8 @@ function StatusBarChart({ PriorityData }: { PriorityData: PriorityCounts }) {
                         <Tooltip formatter={(value: number) => `Count: ${value}`} />
                         <Bar
                             dataKey="value"
-                            barSize={400} // Even bigger bars
-                            maxBarSize={400} // Maximum bar width
+                            barSize={400}
+                            maxBarSize={400}
                         >
                             {chartData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />

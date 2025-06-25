@@ -76,10 +76,8 @@ function login() {
 
 
       </div>
-      {/* Right side - Enhanced Design */}
-      {/* Right side - Simple Design */}
-      {/* Right side - Matching Left Side Theme */}
-      {/* Right side - Blue theme with large icons */}
+      {/* Right side  */}
+
       <div className="hidden md:flex w-1/2 bg-blue-600 h-screen flex-col items-center justify-center p-10 text-white">
         <div className="text-center mb-12">
           <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mb-6 mx-auto">
